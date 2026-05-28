@@ -1,16 +1,55 @@
-# React + Vite
+# 🌿 HabitFlow - Client Frontend Prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HabitFlow is a modern, responsive habit-tracking application built with React, Tailwind CSS, and React Router v6. This repository currently contains the complete client-side architecture featuring global authentication state broadcasting and robust private route guarding.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Key Features Implemented
 
-## React Compiler
+- **Global Auth Context (`AuthContext`)**: Broadcasts the user's login status dynamically across the entire app workspace.
+- **Private Route Guard Layout (`Protected`)**: Uses React Router nested layouts and `<Outlet />` wrappers to securely block unauthenticated traffic from reaching private pages.
+- **Client Form Validations**: Enhanced registration forms with case-insensitive unique email matching, input field requirements, and automated API delay simulation.
+- **User Experience (UX) Enhancements**: Automated 5-second dismiss timers for success indicators alongside manual click-to-dismiss `(X)` notification alerts.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📂 Project Architecture
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+src/
+├── components/
+│   ├── Layout.jsx          # Master skeleton viewport container
+│   ├── Navbar.jsx          # Conditional layout navigation anchor
+│   └── Protected.jsx       # Nested wrapper route validation guard
+├── context/
+│   └── AuthContext.jsx     # Global authentication broadcasting station
+├── pages/
+│   ├── Auth.jsx            # Integrated Login / Sign-Up state screen
+│   ├── Dashboard.jsx       # Private metrics landing zone
+│   ├── Analytics.jsx       # Progress reporting tracking engine
+│   └── MyHabits.jsx        # Core activity creation manager
+└── routes/
+    └── router.jsx          # Decoupled router dictionary configuration
+```
+
+---
+
+## 🛠️ Local Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com
+   cd habit-tracker
+   ```
+
+2. **Install project dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Launch the development server:**
+   ```bash
+   npm run dev
+   ```
+
+
