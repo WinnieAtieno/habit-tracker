@@ -4,10 +4,8 @@ import Dashboard from "../pages/Dashboard";
 import Auth from "../pages/Auth";
 import Layout from "../components/Layout";
 import Protected from "../components/Protected";
-import Analytics from "../pages/Analytics";
-import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
-import AddTask from "../components/AddTask";
+import AddTask from "../pages/AddTask";
 import MyHabits from "../pages/MyHabits";
 
 const router = createBrowserRouter([
@@ -32,17 +30,9 @@ const router = createBrowserRouter([
           {
             path: "dashboard",
             element: <Dashboard />,
-          },
+          },         
           {
-            path: "analytics", 
-            element: <Analytics />,
-          },
-          {
-            path: "settings",
-            element: <Settings />,
-          },
-          {
-            path: "myHabits",
+            path: "myhabits",
             element: <MyHabits />,
           },
           {
@@ -51,6 +41,10 @@ const router = createBrowserRouter([
           },
           {
             path: "add-task",
+            element: <AddTask />,
+          },
+          {
+            path: "edit/:id",
             element: <AddTask />,
           },
         ],

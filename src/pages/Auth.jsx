@@ -7,9 +7,10 @@ import {
   EnvelopeIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import {useAuth} from "../context/AuthContext"
+import { useAuth } from "../context/AuthContext";
+
 function Auth() {
-  const {login} = useAuth()
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -89,7 +90,13 @@ function Auth() {
       );
 
       if (savedUser) {
-        login("demo-token")
+        //Safely extracts and passes data into AuthContext
+        login("demo-token", {
+          name: savedUser.fullname || "HabitFlow Achiever",
+          email: savedUser.email,
+          joinedDate: "May 2026"
+        });
+
         setLoading(false);
         e.target.reset();
         navigate(from, { replace: true });
@@ -151,7 +158,7 @@ function Auth() {
                 type="text"
                 name="fullname"
                 placeholder="Full name"
-                className="w-full pl-10 pr-3 py-2 border rounded-lg"
+                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 required
               />
             </div>
@@ -163,7 +170,7 @@ function Auth() {
               type="email"
               name="email"
               placeholder="Email"
-              className="w-full pl-10 pr-3 py-2 border rounded-lg"
+              className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
               required
             />
           </div>
@@ -174,7 +181,7 @@ function Auth() {
               type="password"
               name="password"
               placeholder="Password"
-              className="w-full pl-10 pr-3 py-2 border rounded-lg"
+              className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
               required
             />
           </div>
@@ -182,7 +189,7 @@ function Auth() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50"
+            className="bg-emerald-500 hover:bg-emerald-600 text-white py-2 rounded-lg flex items-center justify-center gap-2 disabled:opacity-50 transition-colors"
           >
             {loading ? (
               <>
@@ -207,7 +214,7 @@ function Auth() {
               setError("");
               setSuccess("");
             }}
-            className="text-emerald-600 font-semibold"
+            className="text-emerald-600 font-semibold hover:underline"
           >
             {isLogin ? "Sign up" : "Login"}
           </button>
@@ -215,7 +222,7 @@ function Auth() {
 
         {/* ================= HOME LINK ================= */}
         <div className="text-center mt-4">
-          <Link to="/" className="text-xs text-gray-400 hover:text-emerald-500">
+          <Link to="/" className="text-xs text-gray-400 hover:text-emerald-500 transition-colors">
             Back to Home
           </Link>
         </div>
