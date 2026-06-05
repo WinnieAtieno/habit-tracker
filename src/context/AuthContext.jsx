@@ -3,15 +3,23 @@ import { createContext, useContext, useState, useEffect } from "react";
 const AuthContext = createContext(null);
 
 function AuthProvider({ children }) {
-    const [token, setToken] = useState(() => localStorage.getItem("token"));
-    
-      try {
-        const savedUser = localStorage.getItem("user");
-        return savedUser ? JSON.parse(savedUser) : null;
-    } catch {
-        return null;
-    }
-    
+    // Load saved token when the app starts
+    const [token, setToken] = useState(() =>
+        localStorage.getItem("token")
+    );
+
+    // Load saved user data safely
+    const [user, setUser] = useState(() => {
+        try {
+            const savedUser = localStorage.getItem("user");
+            return savedUser ? JSON.parse(savedUser) : null;
+        } catch (error) {
+            console.error("Failed to parse user data:", error);
+            return null;
+        }
+    });
+
+    // Keep token synced with localStorage
     useEffect(() => {
         if (token) {
             localStorage.setItem("token", token);
@@ -20,29 +28,50 @@ function AuthProvider({ children }) {
         }
     }, [token]);
 
-    //  login function to takes and save profile details
+    // Save user data to localStorage whenever it changes
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+        } else {
+            localStorage.removeItem("user");
+        }
+    }, [user]);
+
+    // Log in and store user information
     const login = (userToken, userData) => {
         setToken(userToken);
         setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
     };
 
+    // Log out and clear stored data
     const logout = () => {
         setToken(null);
         setUser(null);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user"); 
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, login, logout }}>
+        <AuthContext.Provider
+            value={{
+                token,
+                user,
+                login,
+                logout,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );
 }
 
+// Custom hook for accessing auth state
 function useAuth() {
-    return useContext(AuthContext);
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthProvider");
+    }
+
+    return context;
 }
 
 export { AuthProvider, useAuth };
